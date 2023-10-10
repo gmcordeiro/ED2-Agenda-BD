@@ -9,7 +9,6 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.security.NoTypePermission;
 import com.thoughtworks.xstream.security.NullPermission;
 import com.thoughtworks.xstream.security.PrimitiveTypePermission;
-import java.awt.Cursor;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -38,7 +37,7 @@ public class AgendaContados extends javax.swing.JFrame {
         jP_Empresa.setVisible(false);
         this.ModoLeitura();
         this.setConfigTable();
-        this.CarregarArquivoXML();
+        this.CarregarListaContatos();
     }
     
 
@@ -557,6 +556,7 @@ public class AgendaContados extends javax.swing.JFrame {
                 
                 modelo.addRow(newRow);
             }
+            SQLQuery.updateContato(newContato);
         } else {
             newContato.setCodigo(UUID.randomUUID().toString());
             
@@ -565,12 +565,12 @@ public class AgendaContados extends javax.swing.JFrame {
             newRow[2] = newContato.getTipoContato();
             newRow[3] = newContato.isFavorito();
             listaContatos.add(newContato);
+            SQLQuery.addContato(newContato);
             modelo.addRow(newRow);
         }
         
         jTable_Registros.setModel(modelo);
         this.ModoLeitura();
-        this.GravarArquivoXML();
     }//GEN-LAST:event_jB_GravarActionPerformed
 
     private void jB_CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB_CancelarActionPerformed
@@ -591,6 +591,7 @@ public class AgendaContados extends javax.swing.JFrame {
         DefaultTableModel modelo = (DefaultTableModel) jTable_Registros.getModel();
         
         listaContatos.remove(indexContato);
+        SQLQuery.deleteContato(obj.toString());
         modelo.removeRow(index);
     }//GEN-LAST:event_jB_ExcluirActionPerformed
 
@@ -759,6 +760,10 @@ public class AgendaContados extends javax.swing.JFrame {
         jTF_Codigo.setText("");
     }
     
+    private void CarregarListaContatos(){
+        listaContatos = SQLQuery.getContato();
+    }
+    
     private void GravarArquivoXML () {
         try {
             XStream st = new XStream(new DomDriver());
@@ -775,7 +780,6 @@ public class AgendaContados extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }
-    
     private void CarregarArquivoXML() {
         try{
             XStream st = new XStream(new DomDriver());
