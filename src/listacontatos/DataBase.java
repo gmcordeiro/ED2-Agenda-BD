@@ -6,7 +6,6 @@ package listacontatos;
 
 import com.mysql.cj.jdbc.Driver;
 import java.sql.*;
-import java.util.ArrayList;
 
 /**
  *
@@ -21,10 +20,10 @@ public class DataBase {
     private static final String STR_CONNECTION = "jdbc:mysql://" + SERVIDOR + ":" + PORTA + "/" + BD + "?" + TIME_ZONE; 
     private static final String USUARIO = "root"; 
     private static final String SENHA = "root";
-    private static final String STR_DRIVER = "Com.mysql.cj.jdbc.Driver";
-    private static Connection objConnection = null;
+    private static final String STR_DRIVER = "com.mysql.cj.jdbc.Driver";
     
-    public static Connection getConnection() {
+    private static Connection StartConnection() {
+        Connection objConnection = null;
         try{
             Class.forName(STR_DRIVER);
             objConnection = DriverManager.getConnection(STR_CONNECTION, USUARIO, SENHA);
@@ -36,6 +35,10 @@ public class DataBase {
         return objConnection;
     }
     
+    public static Connection getConnection() {
+        return StartConnection();
+    }
+    /*
     public static void closeConnection(){
         if(objConnection != null){
             try{
@@ -43,40 +46,8 @@ public class DataBase {
                 objConnection = null;
             }catch(SQLException e){
                 System.out.println("listacontatos.DataBase.closeConnection()");
-                e.printStackTrace();
             }
         }
-    }
+    }*/
     
-    public void add(Contato contato){
-        
-    }
-    
-    public void delete(Contato contato){
-        
-    }
-    
-    public void update(Contato contato){
-        
-    }
-    
-    // Busca um contato pelo UUID
-    public Contato get(String index){
-        objConnection = this.getConnection();
-        Contato contato = new Contato();
-        
-        // Aqui vamos fazer a consulta no banco
-        
-        return contato;
-    }
-    
-    //Busca todos os contatos
-    public ArrayList<Contato> get(){
-        objConnection = this.getConnection();
-        ArrayList<Contato> listaContatos = new ArrayList<>();
-        
-        // Aqui vamos fazer a consulta no banco
-        
-        return listaContatos;
-    }
 }
