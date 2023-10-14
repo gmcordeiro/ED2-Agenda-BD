@@ -762,6 +762,16 @@ public class AgendaContados extends javax.swing.JFrame {
     
     private void CarregarListaContatos(){
         listaContatos = SQLQuery.getContato();
+        DefaultTableModel modelo = (DefaultTableModel) jTable_Registros.getModel();
+        Object [] newRow = new Object[4];
+        for (Contato contato : listaContatos){
+            newRow[0] = contato.getCodigo();
+            newRow[1] = contato.getNome();
+            newRow[2] = contato.getTipoContato();
+            newRow[3] = contato.isFavorito();
+
+            modelo.addRow(newRow);
+        }
     }
     
     private void GravarArquivoXML () {
