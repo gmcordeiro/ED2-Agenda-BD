@@ -289,6 +289,9 @@ public class AgendaContados extends javax.swing.JFrame {
         jTable_Registros.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTable_Registros.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTable_Registros.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable_RegistrosMousePressed(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jTable_RegistrosMousePressed(evt);
             }
